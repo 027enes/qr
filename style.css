@@ -41,6 +41,7 @@ body{
     outline: none;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
+    margin: 5px 0;
 }
 .container button:hover{
     background: aqua;

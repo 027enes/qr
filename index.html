@@ -11,10 +11,11 @@
     <div class="container">
         <p>Qr Kod Oluştur</p>
         <input type="text" placeholder="Url" required id="qrText">
-        <div class="imgBox" id="imgBox">
-            <img src="" alt="" id="qrImg">
-        </div>
+        <a href="" class="imgBox" id="imgBox" download="qrCode.png">
+            <img src="" alt="" id="qrImg" >
+        </a>
         <button onclick="qrAdd()">QR Kod Oluştur</button>
+        <button onclick="downloadQRCode()">QR Kodu İndir</button>
     </div>
 
     <script>
@@ -25,6 +26,7 @@
         function qrAdd(){
             if (qrText.value.length > 0){
                 qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value;
+                imgBox.href = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value;
                 imgBox.classList.add("show")
             }else{
                 qrText.classList.add('error');
@@ -33,6 +35,25 @@
                 },1000);
             }
         }
+
+        function downloadQRCode() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", qrImg.src, true);
+            xhr.responseType = "blob";
+            xhr.onload = function () {
+                var urlCreator = window.URL || window.webkitURL;
+                var imageUrl = urlCreator.createObjectURL(this.response);
+                var tag = document.createElement('a');
+                tag.href = imageUrl;
+                tag.download = "qrCode.png";
+                document.body.appendChild(tag);
+                tag.click();
+                document.body.removeChild(tag);
+            }
+    xhr.send();
+}
+
+
     </script>
 
 </body>
